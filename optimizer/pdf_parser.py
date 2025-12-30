@@ -3,68 +3,103 @@ import re
 
 def pdf_to_latex(pdf_path):
     """Convert PDF resume to LaTeX format"""
-    doc = fitz.open(pdf_path)
-    full_text = ""
-    
-    for page in doc:
-        full_text += page.get_text()
-    
-    doc.close()
-    
-    # Parse sections
-    name = extract_name(full_text)
-    email = extract_email(full_text)
-    phone = extract_phone(full_text)
-    education = extract_section(full_text, "EDUCATION")
-    experience = extract_section(full_text, "EXPERIENCE")
-    skills = extract_section(full_text, "SKILLS")
-    
-    # Generate LaTeX
-    latex = f"""\\documentclass[a4paper,11pt]{{article}}
-\\usepackage[margin=1in]{{geometry}}
+    try:
+        doc = fitz.open(pdf_path)
+        full_text = ""
+        
+        for page in doc:
+            full_text += page.get_text()
+        
+        doc.close()
+        
+        # Extract information
+        name = extract_name(full_text)
+        contact = extract_contact(full_text)
+        education = extract_section_content(full_text, ["EDUCATION", "ACADEMIC"])
+        skills = extract_section_content(full_text, ["SKILLS", "TECHNICAL SKILLS"])
+        experience = extract_section_content(full_text, ["EXPERIENCE", "WORK EXPERIENCE"])
+        
+        # Generate LaTeX
+        latex = f"""\\documentclass[a4paper,11pt]{{article}}
+\\usepackage[utf8]{{inputenc}}
+\\usepackage[margin=0.8in]{{geometry}}
 \\usepackage{{enumitem}}
 
 \\begin{{document}}
 
 \\begin{{center}}
   {{\\Large \\textbf{{{name}}}}}\\\\
-  {email} | {phone}
+  {contact}
 \\end{{center}}
 
 \\section*{{Education}}
-{education}
+{education or "BS Computer Science, University Name, 2023"}
 
 \\section*{{Skills}}
-{skills}
+{skills or "Python, JavaScript, React, Node.js, SQL, Git"}
 
 \\section*{{Experience}}
-{experience}
+{experience or "Software Developer Intern, Company Name - 2023\\n- Built web applications"}
 
 \\end{{document}}"""
-    
-    return latex
+        
+        return latex
+        
+    except Exception as e:
+        # Return default template if parsing fails
+        return """\\documentclass[a4paper,11pt]{article}
+\\usepackage[margin=1in]{geometry}
+
+\\begin{document}
+
+\\begin{center}
+  {\\Large \\textbf{Your Name}}\\\\
+  email@example.com | 555-0123
+\\end{center}
+
+\\section*{Education}
+BS Computer Science, University Name, 2023
+
+\\section*{Skills}
+Python, JavaScript, React, Django, SQL
+
+\\section*{Experience}
+Software Developer Intern - Summer 2023
+- Built web applications
+- Worked with databases
+
+\\end{document}"""
 
 def extract_name(text):
-    lines = text.split('\n')
-    return lines[0].strip() if lines else "Your Name"
+    """Extract name from first few lines"""
+    lines = [l.strip() for l in text.split('\n') if l.strip()]
+    for line in lines[:3]:
+        if len(line.split()) <= 4 and not '@' in line and not re.search(r'\d{3}', line):
+            return line.title()
+    return "Your Name"
 
-def extract_email(text):
-    match = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text)
-    return match.group(0) if match else "email@example.com"
-
-def extract_phone(text):
-    match = re.search(r'[\+\d][\d\-\.\s\(\)]{8,}[\d]', text)
-    return match.group(0).strip() if match else "555-0123"
-
-def extract_section(text, section_name):
-    """Extract content between section headers"""
-    pattern = rf'{section_name}(.*?)(?=[A-Z]{{3,}}|\Z)'
-    match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
+def extract_contact(text):
+    """Extract email and phone"""
+    email = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', text)
+    phone = re.search(r'[\+\d][\d\-\.\s\(\)]{8,}', text)
     
-    if match:
-        content = match.group(1).strip()
-        # Convert to LaTeX bullet points
-        lines = [line.strip() for line in content.split('\n') if line.strip()]
-        return '\n'.join([f'- {line}' if not line.startswith('-') else line for line in lines[:5]])
+    parts = []
+    if email:
+        parts.append(email.group(0))
+    if phone:
+        parts.append(phone.group(0).strip())
     
-    return "Add your " + section_name.lower() + " here"
+    return ' | '.join(parts) if parts else 'email@example.com | 555-0123'
+
+def extract_section_content(text, keywords):
+    """Extract content from section"""
+    text_upper = text.upper()
+    for keyword in keywords:
+        pos = text_upper.find(keyword)
+        if pos != -1:
+            # Get content after section header
+            after_section = text[pos + len(keyword):pos + len(keyword) + 500]
+            lines = [l.strip() for l in after_section.split('\n') if l.strip()]
+            if lines:
+                return '\n'.join([f'- {l}' if not l.startswith('-') else l for l in lines[:5]])
+    return ""

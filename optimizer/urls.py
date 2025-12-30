@@ -6,3 +6,4 @@ urlpatterns = [
     path('api/optimize/', views.optimize_resume, name='optimize_resume'),
     path('api/upload-pdf/', views.upload_pdf, name='upload_pdf'),
 ]
+

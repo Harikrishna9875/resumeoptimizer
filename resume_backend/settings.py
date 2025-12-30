@@ -166,3 +166,9 @@ import os
 GROK_API_KEY = os.environ.get('GROK_API_KEY') or os.environ.get('OPENAI_API_KEY')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY') or os.environ.get('GROK_API_KEY')
 
+# Add these lines:
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000']
+CORS_ALLOW_ALL_ORIGINS = True  # For frontend-backend
+ALLOWED_HOSTS = ['*']  # Allow all hosts for development
+
+
