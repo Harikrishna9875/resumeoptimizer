@@ -152,7 +152,11 @@ CORS_ALLOW_ALL_ORIGINS = True  # For development only
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.vercel.app', 'resumeoptimizer-roan.vercel.app']
 DEBUG = False
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
