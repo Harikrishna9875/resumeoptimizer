@@ -46,3 +46,5 @@ uritemplate==4.2.0
 urllib3==2.6.2
 websockets==15.0.1
 whitenoise==6.11.0
+PyMuPDF==1.24.13
+python-docx==1.1.2

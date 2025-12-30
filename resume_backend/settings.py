@@ -160,3 +160,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Add at bottom
+import os
+GROK_API_KEY = os.environ.get('GROK_API_KEY') or os.environ.get('OPENAI_API_KEY')
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY') or os.environ.get('GROK_API_KEY')
+

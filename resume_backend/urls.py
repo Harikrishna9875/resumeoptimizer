@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('api/optimize/', views.optimize_resume, name='optimize'),
+    path('api/upload-pdf/', views.upload_pdf, name='upload_pdf'), 
 ]
 
