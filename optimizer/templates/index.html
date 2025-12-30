@@ -3,133 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Optimizer - Boost Your ATS Score</title>
+    <title>AI Resume Optimizer - Boost Your ATS Score by 30%</title>
+    <meta name="description" content="Free AI-powered resume optimizer. Upload PDF or LaTeX, get instant ATS optimization with smart keyword suggestions.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
         .latex-input { 
-            font-family: 'Courier New', Consolas, monospace; 
+            font-family: 'Courier New', monospace; 
             font-size: 13px;
-            line-height: 1.6;
-        }
-        .score-badge { 
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            line-height: 1.5;
         }
         .upload-zone { 
-            border: 3px dashed #e5e7eb;
+            border: 2px dashed #cbd5e1;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, #fafafa 0%, #f9fafb 100%);
+            background: #fafafa;
+            cursor: pointer;
         }
         .upload-zone:hover { 
             border-color: #3b82f6;
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+            background: #eff6ff;
         }
-        .feature-card {
+        .card {
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            border: 1px solid #f3f4f6;
-            transition: all 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
         }
-        .feature-card:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            transform: translateY(-4px);
-        }
-        .gradient-text {
+        .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: all 0.3s ease;
+        .score-circle {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-        .keyword-badge {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            transition: all 0.2s ease;
-        }
-        .keyword-badge:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .animate-fade-in-up {
-            animation: fadeInUp 0.5s ease-out;
+        .header-shadow {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen">
-    <!-- Header -->
-    <header class="py-8 px-4">
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="inline-block mb-4 px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100">
-                <span class="text-sm font-semibold text-purple-600">✨ AI-Powered Resume Enhancement</span>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Header / Navigation -->
+    <header class="bg-white header-shadow sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                        <span class="text-white text-2xl font-bold">R</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Resume Optimizer</h1>
+                        <p class="text-xs text-gray-500">AI-Powered ATS Tool</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#features" class="text-gray-600 hover:text-purple-600 font-medium transition-colors">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-purple-600 font-medium transition-colors">How It Works</a>
+                    <a href="https://github.com/Harikrishna9875/resumeoptimizer" target="_blank" class="text-gray-600 hover:text-purple-600 font-medium transition-colors">GitHub</a>
+                    <button onclick="document.getElementById('optimize-section').scrollIntoView({behavior:'smooth'})" class="gradient-bg text-white px-5 py-2 rounded-lg font-semibold hover:opacity-90 transition-all">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
-            <h1 class="text-6xl font-extrabold mb-4">
-                <span class="gradient-text">AI Resume Optimizer</span>
-            </h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Upload your resume PDF or paste LaTeX code. Get instant ATS optimization with 
-                <span class="font-semibold text-purple-600">AI-powered suggestions</span> 
-                and boost your score by 30%+
-            </p>
-        </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 space-y-3">
+                <a href="#features" class="block text-gray-600 hover:text-purple-600 font-medium">Features</a>
+                <a href="#how-it-works" class="block text-gray-600 hover:text-purple-600 font-medium">How It Works</a>
+                <a href="https://github.com/Harikrishna9875/resumeoptimizer" target="_blank" class="block text-gray-600 hover:text-purple-600 font-medium">GitHub</a>
+            </div>
+        </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 pb-16">
-        <div class="grid lg:grid-cols-3 gap-8">
-            <!-- Left: Input Section (2/3 width) -->
-            <div class="lg:col-span-2 space-y-6">
-                <!-- PDF Upload Card -->
-                <div class="feature-card p-8 animate-fade-in-up">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-                            <span class="text-white text-xl">📤</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800">Upload PDF Resume</h3>
-                        <span class="ml-auto text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">Optional</span>
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-purple-50 to-blue-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="inline-block mb-4 px-4 py-2 bg-white rounded-full shadow-sm">
+                <span class="text-sm font-semibold text-purple-600">✨ Free AI-Powered Tool</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4">
+                Boost Your ATS Score by <span class="text-transparent bg-clip-text gradient-bg">30%</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+                Upload your resume PDF or paste LaTeX code. Get instant AI optimization with smart keywords, ATS score analysis, and actionable suggestions.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="document.getElementById('optimize-section').scrollIntoView({behavior:'smooth'})" class="gradient-bg text-white px-8 py-4 rounded-lg text-lg font-bold hover:opacity-90 transition-all shadow-lg">
+                    Start Optimizing Free →
+                </button>
+                <a href="#how-it-works" class="bg-white text-gray-700 px-8 py-4 rounded-lg text-lg font-bold hover:shadow-lg transition-all border border-gray-200">
+                    Learn How It Works
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-12">Why Use Resume Optimizer?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🚀</span>
                     </div>
-                    
-                    <div class="upload-zone p-10 rounded-2xl text-center" id="upload-zone">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Instant Optimization</h3>
+                    <p class="text-gray-600">AI analyzes your resume and job description in 30 seconds. Get optimized LaTeX code instantly.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">85%+ ATS Score</h3>
+                    <p class="text-gray-600">Match job keywords naturally. Increase your chances of passing ATS filters by 30%.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">💡</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">AI Suggestions</h3>
+                    <p class="text-gray-600">Get 3-5 actionable tips to improve your resume beyond keywords.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-900 mb-12">How It Works</h2>
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">1</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Upload or Paste</h3>
+                        <p class="text-gray-600">Upload your resume PDF (auto-converts to LaTeX) or paste existing LaTeX code directly.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">2</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Paste Job Description</h3>
+                        <p class="text-gray-600">Copy the full job posting you're targeting and paste it in the Job Description field.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">3</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">AI Optimization</h3>
+                        <p class="text-gray-600">Our AI analyzes both documents, adds relevant keywords naturally, and generates optimized LaTeX.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">4</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Download & Apply</h3>
+                        <p class="text-gray-600">Copy optimized code, preview in Overleaf, export as PDF, and apply with confidence!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Optimizer Section -->
+    <section id="optimize-section" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-bold text-gray-900 mb-3">Start Optimizing Your Resume</h2>
+                <p class="text-lg text-gray-600">100% free. No sign-up required.</p>
+            </div>
+
+            <!-- Top Row: PDF Upload + LaTeX Code -->
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <!-- PDF Upload -->
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">📤 Upload PDF Resume</h2>
+                    <div class="upload-zone p-8 rounded-lg text-center" id="upload-zone">
                         <input type="file" id="pdf-upload" accept=".pdf" class="hidden">
                         <div id="upload-text">
-                            <svg class="mx-auto h-16 w-16 text-gray-400 mb-6" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                            <svg class="mx-auto h-12 w-12 text-gray-400 mb-3" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <p class="text-lg font-semibold text-gray-700 mb-2">Drop your PDF here or click to browse</p>
-                            <p class="text-sm text-gray-500">Auto-converts to LaTeX in seconds</p>
+                            <p class="font-semibold text-gray-700 mb-1">Click or drag PDF here</p>
+                            <p class="text-sm text-gray-500">Auto-converts to LaTeX</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- LaTeX Resume Input -->
-                <div class="feature-card p-8 animate-fade-in-up" style="animation-delay: 0.1s;">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                            <span class="text-white text-xl">📄</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800">LaTeX Resume Code</h3>
-                    </div>
-                    <textarea id="latex-code" rows="14" 
-                        class="w-full latex-input p-5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 resize-vertical transition-all"
+                <!-- LaTeX Code -->
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">📄 LaTeX Resume Code</h2>
+                    <textarea id="latex-code" rows="10" 
+                        class="w-full latex-input p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                         placeholder="\documentclass[a4paper,11pt]{article}
 \usepackage[margin=1in]{geometry}
 
@@ -138,116 +212,151 @@
   {\Large \textbf{Your Name}}
 \end{center}
 
-\section*{Experience}
-Your experience here...
+\section*{Skills}
+Python, Django, React
 
 \end{document}"></textarea>
                 </div>
+            </div>
 
-                <!-- Job Description Input -->
-                <div class="feature-card p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-                            <span class="text-white text-xl">📋</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800">Target Job Description</h3>
-                    </div>
-                    <textarea id="job-description" rows="10" 
-                        class="w-full p-5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-purple-200 focus:border-purple-500 resize-vertical transition-all"
-                        placeholder="Paste the complete job description here...
+            <!-- Job Description -->
+            <div class="card p-6 mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">📋 Job Description</h2>
+                <textarea id="job-description" rows="8" 
+                    class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                    placeholder="Paste the complete job description here...
 
 Requirements:
 - Python, Django, PostgreSQL
 - REST API development
-- Docker, CI/CD pipelines
-..."></textarea>
+- Docker, CI/CD pipelines"></textarea>
+            </div>
+
+            <!-- Optimize Button -->
+            <button id="optimize-btn" 
+                class="w-full gradient-bg text-white py-4 px-8 rounded-lg text-xl font-bold hover:opacity-90 transition-all shadow-lg mb-6">
+                🚀 Optimize Resume Now
+            </button>
+
+            <!-- Results -->
+            <div id="results-container" class="hidden space-y-6">
+                <!-- Stats -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="card p-6 text-center">
+                        <p class="text-sm text-gray-500 font-semibold uppercase mb-3">ATS Score</p>
+                        <div id="match-score" class="score-circle text-white text-4xl font-bold w-24 h-24 rounded-full flex items-center justify-center mx-auto shadow-lg"></div>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <p class="text-sm text-gray-500 font-semibold uppercase mb-3">Changes Made</p>
+                        <div id="changes-made" class="text-4xl font-bold text-green-600">0</div>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <p class="text-sm text-gray-500 font-semibold uppercase mb-3">Keywords Added</p>
+                        <div id="keywords-count" class="text-4xl font-bold text-blue-600">0</div>
+                    </div>
                 </div>
 
-                <!-- Optimize Button -->
-                <button id="optimize-btn" 
-                    class="w-full btn-primary text-white py-5 px-10 rounded-xl text-xl font-bold shadow-2xl">
-                    <span class="flex items-center justify-center gap-3">
-                        <span>🚀</span>
-                        <span>Optimize My Resume</span>
-                        <span class="text-sm font-normal opacity-90">(30 seconds)</span>
-                    </span>
-                </button>
+                <!-- Keywords -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">✨ Keywords Added</h3>
+                    <div id="keywords-list" class="flex flex-wrap gap-2"></div>
+                </div>
 
-                <!-- Optimized Result -->
-                <div id="result-section" class="hidden feature-card p-8 animate-fade-in-up">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                            <span class="text-white text-xl">✅</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800">Optimized LaTeX Code</h3>
-                    </div>
+                <!-- Suggestions -->
+                <div class="card p-6 bg-gradient-to-br from-purple-50 to-pink-50">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">💡 AI Suggestions</h3>
+                    <ul id="suggestions-list" class="space-y-2"></ul>
+                </div>
+
+                <!-- Optimized Code -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">✅ Optimized LaTeX Code</h3>
+                    <textarea id="optimized-latex" rows="16" 
+                        class="w-full latex-input p-4 border border-green-300 bg-green-50 rounded-lg resize-none mb-4"></textarea>
                     
-                    <textarea id="optimized-latex" rows="22" 
-                        class="w-full latex-input p-5 border-2 border-green-300 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl resize-vertical mb-6"></textarea>
-                    
-                    <div class="flex flex-wrap gap-4">
-                        <button id="copy-code" class="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-4 rounded-xl font-bold hover:shadow-xl transition-all transform hover:-translate-y-1">
+                    <div class="flex flex-wrap gap-3">
+                        <button id="copy-code" class="flex-1 bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all">
                             📋 Copy Code
                         </button>
                         <a id="preview-overleaf" href="#" target="_blank"
-                            class="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-xl font-bold hover:shadow-xl transition-all transform hover:-translate-y-1 text-center hidden">
+                            class="flex-1 bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all text-center">
                             👁️ Preview in Overleaf
                         </a>
-                        <button id="reset-btn" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-6 py-4 rounded-xl font-bold hover:shadow-xl transition-all">
+                        <button id="reset-btn" class="bg-gray-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-600 transition-all">
                             🔄 Reset
                         </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Right: Results Sidebar (1/3 width) -->
-            <div class="space-y-6">
-                <!-- ATS Score Card -->
-                <div id="score-section" class="hidden feature-card p-8 animate-fade-in-up">
-                    <div class="text-center mb-6">
-                        <h3 class="text-lg font-bold text-gray-500 uppercase tracking-wide mb-4">ATS Match Score</h3>
-                        <div id="match-score" class="score-badge text-5xl font-extrabold text-white w-32 h-32 mx-auto rounded-full flex items-center justify-center shadow-2xl"></div>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4 pt-6 border-t-2 border-gray-100">
-                        <div class="text-center">
-                            <div class="text-3xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent" id="changes-made">0</div>
-                            <div class="text-xs text-gray-500 font-semibold mt-2 uppercase tracking-wide">Changes</div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">R</span>
                         </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent" id="keywords-count">0</div>
-                            <div class="text-xs text-gray-500 font-semibold mt-2 uppercase tracking-wide">Keywords</div>
-                        </div>
+                        <span class="text-xl font-bold">Resume Optimizer</span>
                     </div>
+                    <p class="text-gray-400 text-sm">AI-powered ATS optimization tool. Free forever.</p>
                 </div>
 
-                <!-- AI Suggestions Card -->
-                <div id="suggestions-section" class="hidden feature-card bg-gradient-to-br from-purple-50 via-pink-50 to-purple-50 p-8 animate-fade-in-up" style="animation-delay: 0.1s;">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
-                            <span class="text-white text-xl">💡</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">AI Recommendations</h3>
-                    </div>
-                    <ul id="suggestions-list" class="space-y-4"></ul>
+                <!-- Product -->
+                <div>
+                    <h4 class="font-bold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="#optimize-section" class="hover:text-white transition-colors">Get Started</a></li>
+                    </ul>
                 </div>
 
-                <!-- Keywords Card -->
-                <div id="keywords-section" class="hidden feature-card p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center">
-                            <span class="text-white text-xl">✨</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800">Keywords Added</h3>
-                    </div>
-                    <div id="keywords-list" class="flex flex-wrap gap-3"></div>
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-bold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="https://github.com/Harikrishna9875/resumeoptimizer" target="_blank" class="hover:text-white transition-colors">GitHub</a></li>
+                        <li><a href="https://www.overleaf.com/" target="_blank" class="hover:text-white transition-colors">Overleaf</a></li>
+                        <li><a href="https://www.latex-project.org/" target="_blank" class="hover:text-white transition-colors">LaTeX</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-bold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="https://github.com/Harikrishna9875" target="_blank" class="hover:text-white transition-colors">GitHub Profile</a></li>
+                        <li><a href="https://linkedin.com/in/harikrishna" target="_blank" class="hover:text-white transition-colors">LinkedIn</a></li>
+                        <li><a href="mailto:harikrishna@example.com" class="hover:text-white transition-colors">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-sm">© 2025 Resume Optimizer. Built with ❤️ using Django + Groq AI</p>
+                 <p class="text-gray-400 text-sm">Developed by Sathyahari</p>
+                <div class="flex gap-6 text-sm text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
-    </main>
+    </footer>
 
     <script>
-        // PDF Upload Handler
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // PDF Upload
         const uploadZone = document.getElementById('upload-zone');
         const pdfInput = document.getElementById('pdf-upload');
 
@@ -258,7 +367,7 @@ Requirements:
             if (!file) return;
 
             const uploadText = document.getElementById('upload-text');
-            uploadText.innerHTML = '<div class="flex flex-col items-center"><div class="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mb-4"></div><p class="text-blue-600 font-semibold text-lg">Converting PDF to LaTeX...</p></div>';
+            uploadText.innerHTML = '<div class="text-blue-600 font-semibold">⚡ Converting PDF...</div>';
 
             const formData = new FormData();
             formData.append('pdf_file', file);
@@ -269,31 +378,31 @@ Requirements:
 
                 if (data.success) {
                     document.getElementById('latex-code').value = data.latex_code;
-                    uploadText.innerHTML = '<div class="flex flex-col items-center"><svg class="h-16 w-16 text-green-500 mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg><p class="text-green-600 font-bold text-lg">✅ PDF Converted Successfully!</p><p class="text-gray-500 text-sm mt-2">Review LaTeX code below</p></div>';
+                    uploadText.innerHTML = '<div class="text-green-600 font-semibold">✅ PDF Converted!</div>';
                 } else {
-                    uploadText.innerHTML = `<p class="text-red-600 font-semibold">❌ ${data.error}</p>`;
+                    uploadText.innerHTML = `<div class="text-red-600 font-semibold">❌ ${data.error}</div>`;
                 }
             } catch (error) {
-                uploadText.innerHTML = '<p class="text-red-600 font-semibold">❌ Upload failed. Try again.</p>';
+                uploadText.innerHTML = '<div class="text-red-600 font-semibold">❌ Upload failed</div>';
             }
 
             setTimeout(() => {
-                uploadText.innerHTML = '<svg class="mx-auto h-16 w-16 text-gray-400 mb-6" stroke="currentColor" fill="none" viewBox="0 0 48 48"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p class="text-lg font-semibold text-gray-700 mb-2">Drop your PDF here or click to browse</p><p class="text-sm text-gray-500">Auto-converts to LaTeX in seconds</p>';
-            }, 5000);
+                uploadText.innerHTML = '<svg class="mx-auto h-12 w-12 text-gray-400 mb-3" stroke="currentColor" fill="none" viewBox="0 0 48 48"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p class="font-semibold text-gray-700 mb-1">Click or drag PDF here</p><p class="text-sm text-gray-500">Auto-converts to LaTeX</p>';
+            }, 3000);
         });
 
-        // Optimize Handler
+        // Optimize
         document.getElementById('optimize-btn').addEventListener('click', async () => {
             const latexCode = document.getElementById('latex-code').value.trim();
             const jobDesc = document.getElementById('job-description').value.trim();
             
             if (!latexCode || !jobDesc) {
-                alert('⚠️ Please fill both Resume and Job Description fields');
+                alert('⚠️ Please fill both Resume and Job Description');
                 return;
             }
 
             const btn = document.getElementById('optimize-btn');
-            btn.innerHTML = '<span class="flex items-center justify-center gap-3"><div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div><span>Optimizing with AI...</span></span>';
+            btn.innerHTML = '⚡ Optimizing...';
             btn.disabled = true;
 
             try {
@@ -311,36 +420,25 @@ Requirements:
                     document.getElementById('changes-made').textContent = data.changes_made;
                     document.getElementById('keywords-count').textContent = data.keywords_added.length;
                     
-                    // Keywords
-                    const keywordsList = document.getElementById('keywords-list');
-                    keywordsList.innerHTML = data.keywords_added.map(kw => 
-                        `<span class="keyword-badge text-blue-800 px-4 py-2 rounded-full text-sm font-semibold shadow-sm">${kw}</span>`
+                    document.getElementById('keywords-list').innerHTML = data.keywords_added.map(kw => 
+                        `<span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">${kw}</span>`
                     ).join('');
 
-                    // Suggestions
-                    const suggestionsList = document.getElementById('suggestions-list');
-                    suggestionsList.innerHTML = (data.suggestions || []).map(s => 
-                        `<li class="flex items-start gap-3 p-3 bg-white rounded-lg shadow-sm"><span class="text-purple-600 font-bold text-lg">→</span><span class="text-gray-700 leading-relaxed">${s}</span></li>`
+                    document.getElementById('suggestions-list').innerHTML = (data.suggestions || []).map(s => 
+                        `<li class="flex gap-2 text-gray-700"><span class="text-purple-600 font-bold">→</span>${s}</li>`
                     ).join('');
 
-                    // Overleaf
-                    const overleafBtn = document.getElementById('preview-overleaf');
-                    overleafBtn.href = `https://www.overleaf.com/docs#new&code=${encodeURIComponent(data.modified_latex)}`;
-                    overleafBtn.classList.remove('hidden');
+                    document.getElementById('preview-overleaf').href = `https://www.overleaf.com/docs#new&code=${encodeURIComponent(data.modified_latex)}`;
 
-                    // Show
-                    ['score-section', 'suggestions-section', 'keywords-section', 'result-section'].forEach(id => 
-                        document.getElementById(id).classList.remove('hidden')
-                    );
-                    
-                    document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    document.getElementById('results-container').classList.remove('hidden');
+                    document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
                 } else {
                     alert(`❌ Error: ${data.error}`);
                 }
             } catch (error) {
-                alert('❌ Network error. Please try again.');
+                alert('❌ Network error');
             } finally {
-                btn.innerHTML = '<span class="flex items-center justify-center gap-3"><span>🚀</span><span>Optimize My Resume</span><span class="text-sm font-normal opacity-90">(30 seconds)</span></span>';
+                btn.innerHTML = '🚀 Optimize Resume Now';
                 btn.disabled = false;
             }
         });
@@ -350,13 +448,7 @@ Requirements:
             const latex = document.getElementById('optimized-latex');
             latex.select();
             document.execCommand('copy');
-            const btn = event.target;
-            btn.textContent = '✅ Copied!';
-            btn.classList.add('from-green-600', 'to-emerald-700');
-            setTimeout(() => {
-                btn.textContent = '📋 Copy Code';
-                btn.classList.remove('from-green-600', 'to-emerald-700');
-            }, 2000);
+            alert('✅ Copied to clipboard!');
         });
 
         // Reset
@@ -364,30 +456,25 @@ Requirements:
             document.getElementById('latex-code').value = '';
             document.getElementById('job-description').value = '';
             document.getElementById('optimized-latex').value = '';
-            ['score-section', 'suggestions-section', 'keywords-section', 'result-section'].forEach(id => 
-                document.getElementById(id).classList.add('hidden')
-            );
-            document.getElementById('preview-overleaf').classList.add('hidden');
+            document.getElementById('results-container').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // Drag & Drop
         uploadZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadZone.style.borderColor = '#3b82f6';
-            uploadZone.style.transform = 'scale(1.02)';
         });
 
         uploadZone.addEventListener('dragleave', () => {
-            uploadZone.style.borderColor = '#e5e7eb';
-            uploadZone.style.transform = 'scale(1)';
+            uploadZone.style.borderColor = '#cbd5e1';
         });
 
         uploadZone.addEventListener('drop', (e) => {
             e.preventDefault();
-            uploadZone.style.borderColor = '#e5e7eb';
-            uploadZone.style.transform = 'scale(1)';
+            uploadZone.style.borderColor = '#cbd5e1';
             const file = e.dataTransfer.files[0];
-            if (file && file.type === 'application/pdf') {
+            if (file?.type === 'application/pdf') {
                 pdfInput.files = e.dataTransfer.files;
                 pdfInput.dispatchEvent(new Event('change'));
             }
