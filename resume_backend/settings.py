@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import os
+import dj_database_url
+
 
 # Load environment variables
 load_dotenv()
@@ -90,6 +93,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -146,3 +150,9 @@ CORS_ALLOW_ALL_ORIGINS = True  # For development only
 
 # Gemini API Key
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+
+
+ALLOWED_HOSTS = ['*']
+DEBUG = False
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
