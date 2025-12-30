@@ -8,9 +8,11 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
-
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'resume_backend.settings')
 
 application = get_wsgi_application()
+
+# Vercel serverless handler
+app = application

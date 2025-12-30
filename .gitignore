@@ -28,3 +28,13 @@ media/
 .DS_Store
 Thumbs.db
 .vercel
+
+# Vercel
+.vercel
+*.pyc
+__pycache__/
+staticfiles/
+media/
+db.sqlite3
+.env
+*.log
